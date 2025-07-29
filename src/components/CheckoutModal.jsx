@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 const CheckoutModal = ({ cart, totalAmount, user, onClose, onSuccess }) => {
   const [step, setStep] = useState(1); // 1: Confirm Order, 2: Payment, 3: Success
   const [orderConfirmed, setOrderConfirmed] = useState(false);
-  const [paymentMethod, setPaymentMethod] = useState('card');
+  const [paymentMethod, setPaymentMethod] = useState('cod');
   const [paymentData, setPaymentData] = useState({
     cardNumber: '',
     expiryDate: '',
@@ -96,6 +96,13 @@ const CheckoutModal = ({ cart, totalAmount, user, onClose, onSuccess }) => {
           <div style={{ display: 'flex', gap: '1rem' }}>
             <button
               type="button"
+              className={`filter-btn ${paymentMethod === 'cod' ? 'active' : ''}`}
+              onClick={() => setPaymentMethod('cod')}
+            >
+              💵 Cash on Delivery
+            </button>
+            <button
+              type="button"
               className={`filter-btn ${paymentMethod === 'card' ? 'active' : ''}`}
               onClick={() => setPaymentMethod('card')}
             >
@@ -110,6 +117,34 @@ const CheckoutModal = ({ cart, totalAmount, user, onClose, onSuccess }) => {
             </button>
           </div>
         </div>
+
+        {paymentMethod === 'cod' && (
+          <div style={{ textAlign: 'center' }}>
+            <div style={{ 
+              background: 'rgba(40, 167, 69, 0.1)',
+              border: '1px solid rgba(40, 167, 69, 0.3)',
+              borderRadius: '15px',
+              padding: '2rem',
+              margin: '2rem 0'
+            }}>
+              <div style={{ fontSize: '3rem', marginBottom: '1rem' }}>💵</div>
+              <h3 style={{ color: '#28a745', marginBottom: '1rem' }}>Cash on Delivery</h3>
+              <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '1rem' }}>
+                Pay ₹{totalAmount} when your order arrives at your doorstep.
+              </p>
+              <p style={{ color: 'rgba(255,255,255,0.6)', fontSize: '0.9rem' }}>
+                Please keep exact change ready for a smooth delivery experience.
+              </p>
+            </div>
+            <button 
+              className="order-btn"
+              onClick={handlePaymentSubmit}
+              disabled={loading}
+            >
+              {loading ? 'Confirming Order...' : 'Confirm Order'}
+            </button>
+          </div>
+        )}
 
         {paymentMethod === 'card' && (
           <form onSubmit={handlePaymentSubmit}>

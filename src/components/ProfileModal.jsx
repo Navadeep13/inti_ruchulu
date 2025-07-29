@@ -6,7 +6,15 @@ const ProfileModal = ({ user, onClose }) => {
     fullName: user.fullName,
     email: user.email,
     phone: user.phone || '',
-    address: user.address || ''
+    address: user.address || '',
+    dateOfBirth: user.dateOfBirth || '',
+    gender: user.gender || '',
+    alternatePhone: user.alternatePhone || '',
+    pincode: user.pincode || '',
+    city: user.city || '',
+    state: user.state || '',
+    landmark: user.landmark || '',
+    addressType: user.addressType || 'home'
   });
   const [message, setMessage] = useState('');
 
@@ -98,6 +106,115 @@ const ProfileModal = ({ user, onClose }) => {
             />
           </div>
 
+          <div className="form-group">
+            <label className="form-label">Date of Birth</label>
+            <input
+              type="date"
+              name="dateOfBirth"
+              className="form-input"
+              value={formData.dateOfBirth}
+              onChange={handleInputChange}
+              disabled={!editMode}
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Gender</label>
+            <select
+              name="gender"
+              className="form-input"
+              value={formData.gender}
+              onChange={handleInputChange}
+              disabled={!editMode}
+            >
+              <option value="">Select Gender</option>
+              <option value="male">Male</option>
+              <option value="female">Female</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Alternate Phone</label>
+            <input
+              type="tel"
+              name="alternatePhone"
+              className="form-input"
+              value={formData.alternatePhone}
+              onChange={handleInputChange}
+              disabled={!editMode}
+              placeholder="Enter alternate phone number"
+            />
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+            <div className="form-group">
+              <label className="form-label">City</label>
+              <input
+                type="text"
+                name="city"
+                className="form-input"
+                value={formData.city}
+                onChange={handleInputChange}
+                disabled={!editMode}
+                placeholder="Enter city"
+              />
+            </div>
+
+            <div className="form-group">
+              <label className="form-label">Pincode</label>
+              <input
+                type="text"
+                name="pincode"
+                className="form-input"
+                value={formData.pincode}
+                onChange={handleInputChange}
+                disabled={!editMode}
+                placeholder="Enter pincode"
+              />
+            </div>
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">State</label>
+            <input
+              type="text"
+              name="state"
+              className="form-input"
+              value={formData.state}
+              onChange={handleInputChange}
+              disabled={!editMode}
+              placeholder="Enter state"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Landmark (Optional)</label>
+            <input
+              type="text"
+              name="landmark"
+              className="form-input"
+              value={formData.landmark}
+              onChange={handleInputChange}
+              disabled={!editMode}
+              placeholder="Enter nearby landmark"
+            />
+          </div>
+
+          <div className="form-group">
+            <label className="form-label">Address Type</label>
+            <select
+              name="addressType"
+              className="form-input"
+              value={formData.addressType}
+              onChange={handleInputChange}
+              disabled={!editMode}
+            >
+              <option value="home">Home</option>
+              <option value="office">Office</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
           <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
             {editMode ? (
               <>
