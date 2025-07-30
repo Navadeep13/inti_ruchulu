@@ -53,11 +53,16 @@ const ItemDetailModal = ({ item, onClose, onAddToCart }) => {
           
           <div className="video-container">
             <div className="video-placeholder">
-              <div style={{ color: 'rgba(255,255,255,0.6)' }}>
-                🎥 Cooking Video Tutorial
-                <br />
-                <small>Click to watch preparation method</small>
-              </div>
+              <iframe 
+                width="560" 
+                height="315" 
+                src="https://www.youtube.com/embed/MzEFeIRJ0eQ" 
+                title="YouTube video player" 
+                frameBorder="1" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowFullScreen
+                style={{ display: "block", margin: "0 auto", maxWidth: "100%" }}
+              ></iframe>
             </div>
           </div>
         </div>

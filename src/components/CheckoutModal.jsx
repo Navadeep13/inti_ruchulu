@@ -219,9 +219,14 @@ const CheckoutModal = ({ cart, totalAmount, user, onClose, onSuccess }) => {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              borderRadius: '10px'
+              borderRadius: '10px',
+              overflow: 'hidden'
             }}>
-              <div style={{ color: '#000', fontSize: '1.2rem' }}>QR Code</div>
+              <img
+                src="https://i.postimg.cc/02rh3mZj/Whats-App-Image-2025-07-29-at-12-42-11-3d3072dd.jpg"
+                alt="UPI QR Code"
+                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+              />
             </div>
             <p style={{ color: 'rgba(255,255,255,0.8)', marginBottom: '2rem' }}>
               Scan the QR code with your UPI app to pay ₹{totalAmount}

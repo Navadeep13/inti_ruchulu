@@ -7,10 +7,12 @@ import ProfileModal from './ProfileModal.jsx';
 import TrackingModal from './TrackingModal.jsx';
 import CheckoutModal from './CheckoutModal.jsx';
 import Footer from './Footer.jsx';
+import Chatbot from './Chatbot.jsx';
 import { menuData } from '../data/menuData.js';
 
 const MainApp = ({ user, onLogout }) => {
   const [activeFilter, setActiveFilter] = useState('all');
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedItem, setSelectedItem] = useState(null);
   const [showItemDetail, setShowItemDetail] = useState(false);
   const [showCart, setShowCart] = useState(false);
@@ -38,9 +40,11 @@ const MainApp = ({ user, onLogout }) => {
     setTimeout(() => setNotification(''), 3000);
   };
 
-  const filteredItems = activeFilter === 'all' 
-    ? menuData 
-    : menuData.filter(item => item.category === activeFilter);
+  const filteredItems = menuData.filter(item => {
+    const matchesFilter = activeFilter === 'all' || item.category === activeFilter;
+    const matchesSearch = item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    return matchesFilter && matchesSearch;
+  });
 
   const addToCart = (item) => {
     const existingItem = cart.find(cartItem => cartItem.id === item.id);
@@ -125,17 +129,34 @@ const MainApp = ({ user, onLogout }) => {
           <p className="menu-subtitle">Authentic South Indian flavors crafted with love</p>
         </div>
 
-        <div className="filter-bar">
-          {['all', 'breakfast', 'lunch', 'dinner', 'snacks', 'beverages', 'desserts'].map(filter => (
-            <button
-              key={filter}
-              className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
-              onClick={() => setActiveFilter(filter)}
-            >
-              {filter.charAt(0).toUpperCase() + filter.slice(1)}
-            </button>
-          ))}
-        </div>
+
+      <div className="search-bar" style={{ display: 'flex', gap: '0.5rem', marginBottom: '1rem', justifyContent: 'center' }}>
+        <input
+          type="text"
+          placeholder="Search menu..."
+          value={searchQuery}
+          onChange={e => setSearchQuery(e.target.value)}
+          style={{ padding: '0.5rem', borderRadius: '4px', border: '1px solid #ccc', minWidth: '200px' }}
+        />
+        <button
+          onClick={() => setSearchQuery(searchQuery)}
+          style={{ padding: '0.5rem 1rem', borderRadius: '4px', background: '#ff9800', color: '#fff', border: 'none', cursor: 'pointer' }}
+        >
+          Search
+        </button>
+      </div>
+
+      <div className="filter-bar">
+        {['all', 'breakfast', 'lunch', 'dinner', 'snacks', 'beverages', 'desserts'].map(filter => (
+          <button
+            key={filter}
+            className={`filter-btn ${activeFilter === filter ? 'active' : ''}`}
+            onClick={() => setActiveFilter(filter)}
+          >
+            {filter.charAt(0).toUpperCase() + filter.slice(1)}
+          </button>
+        ))}
+      </div>
 
         <MenuGrid
           items={filteredItems}
@@ -163,6 +184,9 @@ const MainApp = ({ user, onLogout }) => {
       >
         📍
       </button>
+
+      {/* Chatbot */}
+      <Chatbot />
 
       {/* Modals */}
       {showItemDetail && selectedItem && (
